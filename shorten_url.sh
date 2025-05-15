@@ -88,28 +88,26 @@ shortenUrl() {
 # Exibe versão
 show_version() {
 	printf "Shorten-URL versão %s\n" "$version"
-	exit 0
 }
 
 # Mostra os serviços disponíveis
-show_services() {
-	for service in "${service_shorten[@]}"; do
+show_services() {	
+	for service in "${services_shorten[@]}"; do
 		echo "- $service"
 	done
 }
 
 # Exibe ajuda
-if [[ $# -eq 0 ]]; then
+if [[ -z "$1" ]]; then
     show_help
-    exit 0
 fi
 
 while test -n "$1"; do
 
 	case "$1" in
-		-h | --help) show_help;;
-		-v | --version) show_version;;
-		-l | --list) show_services;;
+		-h | --help) show_help && exit 0;;
+		-v | --version) show_version && exit 0;;
+		-l | --services) show_services && exit 0;;
 		-u | --url)
 			shift
 
@@ -131,6 +129,7 @@ while test -n "$1"; do
 
 			type="$1"
 			;;
+			
 		-k | --token)
 			shift
 
@@ -141,11 +140,10 @@ while test -n "$1"; do
 
 			token="$1"
 			;;
+			
 		*) 
-			msg "err" "Opção inválida: $1" "is_prefix"
-			exit 1;;
+			msg "err" "Opção inválida: $1" "is_prefix" && exit 1;;
 	esac
-
 	shift
 done
 
