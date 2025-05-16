@@ -98,8 +98,8 @@ show_services() {
 }
 
 # Exibe ajuda
-if [[ -z "$1" ]]; then
-    show_help
+if [[ $# -lt 1 ]]; then
+    show_help && exit 0
 fi
 
 while test -n "$1"; do
